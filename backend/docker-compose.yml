@@ -1,0 +1,32 @@
+version: "3"
+services:
+  db:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: temerav
+      POSTGRES_PASSWORD: Macska100!
+      POSTGRES_DB: webapp
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.comj
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+  spring-boot:
+    container_name: spring-boot-webapp-boot-docker-debug
+    build: .
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n
+
+
+
