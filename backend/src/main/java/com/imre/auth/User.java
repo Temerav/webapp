@@ -33,6 +33,4 @@ public class User {
 
     private final boolean activated = false;
 
-    private final boolean twoFactorialAuth = false;
-
 }
