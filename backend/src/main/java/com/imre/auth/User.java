@@ -1,9 +1,13 @@
 package com.imre.auth;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.Data;
 
 
@@ -15,22 +19,24 @@ public class User {
     private final Long id;
 
     @NotNull(message = "Firstname is mandatory")
-    private final String firstName;
+    private String firstName;
 
     @NotNull(message = "Lastname is mandatory")
-    private final String lastName;
+    private String lastName;
 
     @NotNull(message = "Username is mandatory")
-    private final String userName;
+    private String userName;
 
     @NotNull(message = "Password is mandatory")
-    private final String password;
+    private String password;
 
     @NotNull(message = "Email Adress is mandatory")
-    private final String emailAddress;
+    private String emailAddress;
 
-    private final String secretCode = "";
+    private Set<String> userRoles = new HashSet<String>();
 
-    private final boolean activated = false;
+    private String secretCode = "";
+
+    private boolean activated = false;
 
 }
