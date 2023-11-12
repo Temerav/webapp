@@ -1,13 +1,11 @@
-INSERT INTO "user"
+INSERT INTO public.user
 (
     id,
     first_name,
     last_name,
     user_name,
     password,
-    email_address,
-    secret_code,
-    activated
+    email_address
 )
 VALUES
 (
@@ -16,7 +14,5 @@ VALUES
     'Turcsan',
     'Admin',
     'Admin',
-    'admin@gmail.com',
-    '',
-    false
+    'admin@gmail.com'
 )

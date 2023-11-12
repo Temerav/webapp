@@ -3,15 +3,21 @@ package com.imre.auth;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 
-@Data
+@Entity
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -32,11 +38,4 @@ public class User {
 
     @NotNull(message = "Email Adress is mandatory")
     private String emailAddress;
-
-    private Set<String> userRoles = new HashSet<String>();
-
-    private String secretCode = "";
-
-    private boolean activated = false;
-
 }
