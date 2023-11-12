@@ -1,12 +1,22 @@
-import './App.css';
+import Home from './components/home/Home.js'
+import About from './components/about/About.js'
+import Navbar from './components/navbar/Navbar.js';
+import { Route, Routes } from 'react-router-dom';
+import Admin from './components/admin/Admin.js';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hello World!</h1>
-      </header>
-    </div>
+    <>
+      <Navbar/>
+      <div className='container'>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path='/admin' element={<Admin/>} />
+          <Route path='/about' element={<About/>} />
+        </Routes>
+      </div>
+    </>
   );
 }
 

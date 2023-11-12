@@ -2,6 +2,7 @@ package com.imre.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,13 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imre.model.Item;
 import com.imre.repository.ItemRepository;
+import com.imre.service.ItemService;
 
 import lombok.RequiredArgsConstructor;
 
 
-@RestController
-@RequestMapping("item")
 @RequiredArgsConstructor
+@RequestMapping("/v1/item")
+@CrossOrigin
+@RestController
 public class ItemController {
 
     private final ItemRepository itemRepository;

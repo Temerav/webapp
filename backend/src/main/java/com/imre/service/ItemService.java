@@ -1,4 +1,4 @@
-package com.imre.controller;
+package com.imre.service;
 
 import org.springframework.stereotype.Service;
 
@@ -8,8 +8,8 @@ import com.imre.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class ItemService {
 
     private final ItemRepository itemRepository;
@@ -19,7 +19,7 @@ public class ItemService {
         final Item newItem
     ) throws Exception {
         var saveItem = new Item();
-        var dbItem = itemRepository.findItemByName(newItem.getItemName());
+        var dbItem = itemRepository.findItemByItemName(newItem.getItemName());
 
         if(!dbItem.isPresent()) {
             saveItem.setItemName(newItem.getItemName());
