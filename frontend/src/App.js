@@ -9,6 +9,7 @@ import Contact from "./components/Contact/index.js";
 import CssBaseline from "@mui/material/CssBaseline";
 import * as React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import SpeedDialCustom from "./components/SpeedDialCustom/index.js";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -46,6 +47,7 @@ function App() {
             <Route path="/About" element={<About />} />
             <Route path="/Contact" element={<Contact />} />
           </Routes>
+          <SpeedDialCustom />
         </ThemeProvider>
       </ColorModeContext.Provider>
     </>

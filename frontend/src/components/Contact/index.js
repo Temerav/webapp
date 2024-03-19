@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
+import Box from "@mui/material/Box";
+import LoadingLine from "../LoadingLine";
 
 const Contact = () => {
-
-
   return (
-    <div>
-      <h1 className="text-center">Kontakt</h1>
-    </div>
+    <>
+      <LoadingLine />
+      <Box></Box>
+    </>
   );
 };
 
