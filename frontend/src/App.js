@@ -29,12 +29,19 @@ function App() {
       createTheme({
         palette: {
           mode,
+          ...(mode === "light"
+            ? {}
+            : {
+                background: {
+                  default: "#1D2125",
+                },
+              }),
         },
       }),
     [mode],
   );
   return (
-    <>
+    <div>
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
@@ -50,7 +57,7 @@ function App() {
           <SpeedDialCustom />
         </ThemeProvider>
       </ColorModeContext.Provider>
-    </>
+    </div>
   );
 }
 

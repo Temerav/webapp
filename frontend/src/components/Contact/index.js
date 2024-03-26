@@ -1,13 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import LoadingLine from "../LoadingLine";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 const Contact = () => {
   return (
     <div>
-      <LoadingLine />
       <Box
         component="form"
         sx={{
@@ -16,8 +14,12 @@ const Contact = () => {
           marginLeft: "7%",
           marginRight: "7%",
           textAlign: "center",
-          border: "2px solid grey",
           "& .MuiTextField-root": { m: "2%", width: "23%" },
+          position: "relative",
+          overflowY: "scroll",
+          boxShadow: "0 0 50px 0 rgba(0,0,0,0.2)",
+          color: "inherit",
+          borderRadius: "20px",
         }}
       >
         <h4

@@ -33,7 +33,7 @@ const SpeedDialCustom = () => {
   };
 
   return (
-    <>
+    <div>
       <SpeedDial
         ariaLabel="SpeedDial basic example"
         sx={{ position: "fixed", bottom: 16, right: 16 }}
@@ -48,7 +48,7 @@ const SpeedDialCustom = () => {
           />
         ))}
       </SpeedDial>
-    </>
+    </div>
   );
 };
 

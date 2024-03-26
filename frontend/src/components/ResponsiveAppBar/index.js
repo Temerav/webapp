@@ -24,6 +24,8 @@ const ResponsiveAppBar = ({ colorMode, theme }) => {
     <Box>
       <AppBar
         position="fixed"
+        width="100vh"
+        height="10vh"
         style={
           theme.palette.mode === "light"
             ? {
