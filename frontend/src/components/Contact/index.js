@@ -16,7 +16,6 @@ const Contact = () => {
           textAlign: "center",
           "& .MuiTextField-root": { m: "2%", width: "23%" },
           position: "relative",
-          overflowY: "scroll",
           boxShadow: "0 0 50px 0 rgba(0,0,0,0.2)",
           color: "inherit",
           borderRadius: "20px",
