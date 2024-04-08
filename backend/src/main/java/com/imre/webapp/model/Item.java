@@ -1,4 +1,4 @@
-package com.imre.model;
+package com.imre.webapp.model;
 
 import org.hibernate.annotations.GenericGenerator;
 

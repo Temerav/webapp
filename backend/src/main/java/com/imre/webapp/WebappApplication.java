@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
-@EnableJpaRepositories("com.imre.*")
-@ComponentScan(basePackages = { "com.imre.*" })
-@EntityScan("com.imre.*")
+@ComponentScan(basePackages = { "com.imre.webapp.*" })
+@EntityScan("com.imre.webapp.*")
+@EnableJpaRepositories("com.imre.webapp.*")
 public class WebappApplication {
 
 

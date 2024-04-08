@@ -1,8 +1,7 @@
-package com.imre.controller;
+package com.imre.webapp.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imre.model.Item;
-import com.imre.repository.ItemRepository;
-import com.imre.service.ItemService;
-
-import lombok.RequiredArgsConstructor;
+import com.imre.webapp.model.Item;
+import com.imre.webapp.repository.ItemRepository;
+import com.imre.webapp.service.ItemService;
 
 
 @RequestMapping("/v1/item")

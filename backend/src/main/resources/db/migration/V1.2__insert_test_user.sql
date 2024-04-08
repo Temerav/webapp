@@ -1,18 +1,18 @@
 INSERT INTO public.user
 (
     id,
-    first_name,
-    last_name,
-    user_name,
+    full_name,
+    email,
     password,
-    email_address
+    role,
+    mobile
 )
 VALUES
 (
     1,
-    'Imre',
-    'Turcsan',
     'Admin',
-    'Admin',
-    'admin@gmail.com'
+    'asd@asd.com',
+    '$2a$10$HklZAQuQWjf7Np.S2.SsSOyqQQhNo6ccJoFBTNn0BYog3Mw5UXxaK',
+    'ROLE_ADMIN',
+    '+36301221222'
 )

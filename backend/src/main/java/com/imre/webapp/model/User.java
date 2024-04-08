@@ -1,14 +1,15 @@
-package com.imre.model;
+package com.imre.webapp.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Table(name="User", schema = "public")
 public class User {
 
     @Id

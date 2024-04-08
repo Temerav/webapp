@@ -1,16 +1,15 @@
-package com.imre.repository;
+package com.imre.webapp.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
+import com.imre.webapp.model.User;
 import org.springframework.stereotype.Repository;
 
-import com.imre.model.User;
+import java.util.Optional;
 
 @Repository
-public interface UserRepository extends
-    JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("{email :?0}")
-    User findByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 }

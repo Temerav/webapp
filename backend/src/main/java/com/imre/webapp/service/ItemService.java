@@ -1,9 +1,9 @@
-package com.imre.service;
+package com.imre.webapp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.imre.model.Item;
-import com.imre.repository.ItemRepository;
+import com.imre.webapp.model.Item;
+import com.imre.webapp.repository.ItemRepository;
 
 import lombok.RequiredArgsConstructor;
 
