@@ -11,7 +11,16 @@ import BrushIcon from "@mui/icons-material/Brush";
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "../ThemeSwitcher";
 
-const pages = ["Welcome", "Shop", "Work", "About", "Contact"];
+const pages = [
+  "Welcome",
+  "Shop",
+  "Work",
+  "About",
+  "Contact",
+  "Login",
+  "Signup",
+  "Dashboard",
+];
 
 const ResponsiveAppBar = ({ colorMode, theme }) => {
   const navigate = useNavigate();

@@ -10,6 +10,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import * as React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SpeedDialCustom from "./components/SpeedDialCustom/index.js";
+import Login from "./components/Login/index.js";
+import Signup from "./components/Signup/index.js";
+import Dashboard from "./components/Dashboard/index.js";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -53,6 +56,9 @@ function App() {
             <Route path="/Work" element={<Work />} />
             <Route path="/About" element={<About />} />
             <Route path="/Contact" element={<Contact />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Signup" element={<Signup />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
           </Routes>
           <SpeedDialCustom />
         </ThemeProvider>

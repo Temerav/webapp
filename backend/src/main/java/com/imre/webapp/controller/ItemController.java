@@ -2,6 +2,7 @@ package com.imre.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,6 @@ import com.imre.service.ItemService;
 import lombok.RequiredArgsConstructor;
 
 
-@RequiredArgsConstructor
 @RequestMapping("/v1/item")
 @CrossOrigin
 @RestController
@@ -28,11 +28,17 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final ItemService itemService;
 
+    public ItemController(
+        final ItemRepository itemRepository,
+        final ItemService itemService
+    ) {
+      this.itemRepository = itemRepository;
+      this.itemService = itemService;
+    }
 
     @GetMapping("")
     public List<Item> getItems() {
-        var itemsList = itemRepository.findAll();
-        return itemsList;
+        return itemRepository.findAll();
     }
 
     @PostMapping("")
