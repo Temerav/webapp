@@ -27,18 +27,20 @@ const Welcome = () => {
         </h1>
         <Slideshow></Slideshow>
         <br />
-        <h3>
-          Step into a world where colors dance and emotions sing – welcome to
-          Reka's Webshop,
-          <br /> where you can immerse your portal to a realm of artistic
-          wonder. Here, amidst the digital canvases,
-          <br />
-          <WritingEffect
-            text="you'll discover a curated collection of Reka Temesvari's finest
+        <div
+          style={{ textAlign: "center", marginLeft: "7%", marginRight: "7%" }}
+        >
+          <h3>
+            Step into a world where colors dance and emotions sing – welcome to
+            Reka's Webshop, where you can immerse your portal to a realm of
+            artistic wonder. Here, amidst the digital canvases,
+            <WritingEffect
+              text="you'll discover a curated collection of Reka Temesvari's finest
           creations, each a masterpiece in its own right."
-            delay={100}
-          />
-        </h3>
+              delay={100}
+            />
+          </h3>
+        </div>
         <br />
       </Box>
     </div>

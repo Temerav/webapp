@@ -17,14 +17,18 @@ import Dashboard from "./components/Dashboard/index.js";
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function App() {
-  const [mode, setMode] = React.useState("light");
+  const [mode, setMode] = React.useState(
+    localStorage.getItem("mode") || "light",
+  );
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+        localStorage.setItem("mode", mode === "light" ? "dark" : "light");
       },
     }),
-    [],
+    [mode],
   );
 
   const theme = React.useMemo(

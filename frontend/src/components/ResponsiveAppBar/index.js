@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,19 +11,26 @@ import BrushIcon from "@mui/icons-material/Brush";
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "../ThemeSwitcher";
 
-const pages = [
-  "Welcome",
-  "Shop",
-  "Work",
-  "About",
-  "Contact",
-  "Login",
-  "Signup",
-  "Dashboard",
-];
+let pages = ["Welcome", "Shop", "Work", "About", "Contact", "Login", "Signup"];
 
 const ResponsiveAppBar = ({ colorMode, theme }) => {
   const navigate = useNavigate();
+
+  useMemo(() => {
+    if (localStorage.getItem("session") !== null) {
+      pages = ["Welcome", "Shop", "Work", "About", "Contact", "Dashboard"];
+    } else {
+      pages = [
+        "Welcome",
+        "Shop",
+        "Work",
+        "About",
+        "Contact",
+        "Login",
+        "Signup",
+      ];
+    }
+  }, [localStorage.getItem("session")]);
 
   const handleClick = (page) => {
     navigate(`/${page}`);
@@ -70,7 +77,7 @@ const ResponsiveAppBar = ({ colorMode, theme }) => {
                     lineHeight: "48px",
                   }}
                 >
-                  {page}
+                  {page === "Signup" ? "Sign Up" : page}
                 </Typography>
               </MenuItem>
             </Tooltip>
