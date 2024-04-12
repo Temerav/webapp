@@ -66,6 +66,8 @@ public class UserController {
         authResponse.setJwt(token);
         authResponse.setMessage("Register Success");
         authResponse.setStatus(true);
+        authResponse.setEmail(email);
+        authResponse.setFullName(fullName);
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 
     }
@@ -84,12 +86,21 @@ public class UserController {
         Authentication authentication = authenticate(username,password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        String name = "";
+        var user = userRepository.findUserByEmail(username);
+
+        if (user.isPresent()){
+           name = user.get().getFullName();
+        }
+
         String token = JwtProvider.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse();
 
         authResponse.setMessage("Login success");
         authResponse.setJwt(token);
         authResponse.setStatus(true);
+        authResponse.setEmail(username);
+        authResponse.setFullName(name);
 
         return new ResponseEntity<>(authResponse,HttpStatus.OK);
     }
