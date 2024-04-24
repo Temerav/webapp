@@ -8,8 +8,6 @@ const WelcomeDashboard = () => {
   const [username, setUsername] = useState("");
 
   const handleLogout = () => {
-    // Perform logout actions here (e.g., clear session, remove authentication token)
-    // After logout, redirect to the login page
     localStorage.removeItem("session");
     history("/");
   };

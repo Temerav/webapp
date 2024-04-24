@@ -1,14 +1,16 @@
 import React, { useMemo, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { MDBContainer, MDBInput } from "mdb-react-ui-kit";
+import { MDBContainer } from "mdb-react-ui-kit";
 import Textfield from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { CircularProgress } from "@mui/material";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const history = useNavigate();
 
   useMemo(() => {
@@ -21,20 +23,28 @@ const Login = () => {
   }, [history, localStorage.getItem("session")]);
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       if (!email || !password) {
         setError("Please enter both email and password.");
         return;
       }
 
-      const response = await axios.post("http://localhost:8080/auth/signin", {
-        email,
-        password,
-      });
+      const response = await axios
+        .post("http://localhost:8080/auth/signin", {
+          email,
+          password,
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error.response ? error.response.data : error.message);
+        });
+      setLoading(false);
       console.log("Login successful:", response.data);
       localStorage.setItem("session", JSON.stringify(response.data));
       history("/dashboard");
     } catch (error) {
+      setLoading(false);
       console.error(
         "Login failed:",
         error.response ? error.response.data : error.message,
@@ -88,7 +98,7 @@ const Login = () => {
           </div>
           <br />
           {error && <p className="text-danger">{error}</p>}{" "}
-          {/* Render error message if exists */}
+          {loading && <CircularProgress color="secondary" />}
           <br />
           <div>
             <Button

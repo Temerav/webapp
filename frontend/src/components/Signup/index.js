@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useHistory hook
+import { useNavigate } from "react-router-dom";
 import { MDBContainer } from "mdb-react-ui-kit";
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import Textfield from "@mui/material/TextField";
+import { CircularProgress } from "@mui/material";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -12,21 +13,19 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role] = useState("ROLE_CUSTOMER");
   const [mobile, setMobileNumber] = useState("");
-  const [error, setError] = useState(""); // State to manage error messages
-  const history = useNavigate(); // Get the history object for redirection
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useNavigate();
 
   useMemo(() => {
     if (localStorage.getItem("session") !== null) {
       history("/dashboard");
-      setTimeout(() => {
-        history("/login");
-      }, 3000);
     }
   }, [history, localStorage.getItem("session")]);
 
   const handleSignup = async () => {
+    setLoading(true);
     try {
-      // Check for empty fields
       if (!fullName || !email || !password || !confirmPassword || !mobile) {
         setError("Please fill in all fields.");
         return;
@@ -36,19 +35,24 @@ const Signup = () => {
         throw new Error("Passwords do not match");
       }
 
-      const response = await axios.post("http://localhost:8080/auth/signup", {
-        fullName,
-        email,
-        password,
-        role,
-        mobile,
-      });
-      // Handle successful signup
-      console.log(response.data);
+      const response = await axios
+        .post("http://localhost:8080/auth/signup", {
+          fullName,
+          email,
+          password,
+          role,
+          mobile,
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error.response ? error.response.data : error.message);
+        });
+
       localStorage.setItem("session", JSON.stringify(response.data));
+      setLoading(false);
       history("/dashboard");
     } catch (error) {
-      // Handle signup error
+      setLoading(false);
       console.error(
         "Signup failed:",
         error.response ? error.response.data : error.message,
@@ -76,7 +80,6 @@ const Signup = () => {
         <MDBContainer className="p-3">
           <div>
             <h2 className="mb-4 text-center">Create an Account</h2>
-            {/* Render error message if exists */}
             {error && <p className="text-danger">{error}</p>}
             <Textfield
               required
@@ -142,6 +145,7 @@ const Signup = () => {
             />
           </div>
           <br />
+          {loading && <CircularProgress color="secondary" />}
           <div>
             <Button
               variant="contained"
@@ -154,7 +158,7 @@ const Signup = () => {
           <div className="text-center">
             <p>
               <br />
-              Already Registered? <a href="/">Login</a>
+              Already Registered? <a href="/Login">Login</a>
             </p>
           </div>
         </MDBContainer>

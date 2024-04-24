@@ -1,13 +1,27 @@
 import React from "react";
 import "./styles.css";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
-const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF0080"];
-const texts = ["Slide 1", "Slide 2", "Slide 3", "Slide 4", "Slide 5"];
 const delay = 2500;
 
 const Slideshow = () => {
   const [index, setIndex] = React.useState(0);
   const timeoutRef = React.useRef(null);
+  const [itemData, setItemData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useMemo(() => {
+    axios
+      .get("http://localhost:8080/workitem")
+      .then((response) => {
+        setLoading(false);
+        setItemData(response.data);
+      })
+      .catch((error) => {
+        console.error(error.toJSON());
+      });
+  }, []);
 
   function resetTimeout() {
     if (timeoutRef.current) {
@@ -20,7 +34,7 @@ const Slideshow = () => {
     timeoutRef.current = setTimeout(
       () =>
         setIndex((prevIndex) =>
-          prevIndex === colors.length - 1 ? 0 : prevIndex + 1,
+          prevIndex === itemData.length - 1 ? 0 : prevIndex + 1,
         ),
       delay,
     );
@@ -28,36 +42,41 @@ const Slideshow = () => {
     return () => {
       resetTimeout();
     };
-  }, [index]);
+  }, [index, itemData.length]);
 
   return (
-    <div className="slideshow">
+    <div
+      className="slideshow"
+      style={{
+        width: "750px",
+        maxHeight: "max-content",
+      }}
+    >
+      {loading && <CircularProgress color="secondary" />}
       <div
         className="slideshowSlider"
-        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
+        style={{
+          transform: `translate3d(${-index * 100}%, 0, 0)`,
+        }}
       >
-        {colors.map((backgroundColor, index) => (
-          <div className="slide" key={index} style={{ backgroundColor }}>
-            <p
-              style={{
-                textAlign: "center",
-                marginTop: "30vh",
-                marginBottom: "5vh",
-              }}
-            >
-              {texts[index]}
-            </p>
+        {itemData.map((item) => (
+          <div className="slide" key={item.id} justifyContent="center">
+            <img
+              src={`http://localhost:8080${item.picturePath}`}
+              alt={`${item.itemName}`}
+              style={{ width: "750px", height: "900px" }}
+            ></img>
           </div>
         ))}
       </div>
 
       <div className="slideshowDots">
-        {colors.map((_, idx) => (
+        {itemData.map((item) => (
           <div
-            key={idx}
-            className={`slideshowDot${index === idx ? " active" : ""}`}
+            key={item.id - 1}
+            className={`slideshowDot${index === item.id - 1 ? " active" : ""}`}
             onClick={() => {
-              setIndex(idx);
+              setIndex(item.id - 1);
             }}
           ></div>
         ))}

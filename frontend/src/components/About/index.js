@@ -5,26 +5,34 @@ const About = () => {
   return (
     <div>
       <Box
-        component="form"
         sx={{
-          marginTop: "7%",
-          marginBottom: "5%",
-          marginLeft: "7%",
-          marginRight: "7%",
+          marginTop: "7vh",
+          marginBottom: "2vh",
+          marginLeft: "auto",
+          marginRight: "auto",
           textAlign: "center",
           position: "relative",
           boxShadow: "0 0 50px 0 rgba(0,0,0,0.2)",
           color: "inherit",
           borderRadius: "20px",
+          maxWidth: "1200px",
+          justifyContent: "center",
+          maxHeight: "90vh",
         }}
       >
         <br />
-        <h1
-          style={{ textAlign: "center", marginTop: "7vh", marginBottom: "7vh" }}
-        >
+        <h1 style={{ textAlign: "center", marginBottom: "7vh" }}>
           🎨 Réka Temesvári: Capturing Life's Essence on Canvas 🎨
         </h1>
-        <h2>
+        <h2
+          style={{
+            textAlign: "center",
+            marginTop: "3vh",
+            marginBottom: "3vh",
+            marginLeft: "3vw",
+            marginRight: "3vw",
+          }}
+        >
           👋 Greetings! I'm Réka Temesvári, a passionate painter dedicated to
           encapsulating the beauty and depth of life through vibrant strokes of
           color and intricate details.
