@@ -7,6 +7,8 @@ import com.imre.webapp.repository.ItemRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -69,4 +71,7 @@ public class ItemService {
         }
     }
 
+    public List<Item> findAllItem() {
+        return itemRepository.findAll();
+    }
 }

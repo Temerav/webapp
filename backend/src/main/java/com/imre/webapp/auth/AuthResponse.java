@@ -9,4 +9,5 @@ public class AuthResponse {
     private Boolean status;
     private String email;
     private String fullName;
+    private String role;
 }

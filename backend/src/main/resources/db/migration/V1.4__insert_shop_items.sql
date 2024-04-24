@@ -9,36 +9,36 @@ INSERT INTO item
 VALUES
 (
     1,
-    "Forest",
+    'Forest',
     15000,
-    "Handmade, beautiful picture about the forest",
-    "/item/image5.jpeg",
+    'Handmade, beautiful picture about the forest',
+    '/item/image5.jpeg'
 ),
 (
     2,
-    "Fishes in lake",
+    'Fishes in lake',
     18500,
-    "Handmade, made with paint and brush technique",
-    "/item/image6.jpeg"
+    'Handmade, made with paint and brush technique',
+    '/item/image6.jpeg'
 ),
 (
     3,
-    "Detroit become human",
+    'Detroit become human',
     12000,
-    "Handmade, used pencils to make it",
-    "/item/image7.jpeg"
+    'Handmade, used pencils to make it',
+    '/item/image7.jpeg'
 ),
 (
     4,
-    "The creation of Adam",
+    'The creation of Adam',
     16750,
-    "Handmade, painted with love"
-    "/item/image8.jpeg"
+    'Handmade, painted with love',
+    '/item/image8.jpeg'
 ),
 (
     5,
-    "Monstera",
+    'Monstera',
     9570,
-    "Handmade, only with pens"
-    "/item/image9.jpeg"
+    'Handmade, only with pens',
+    '/item/image9.jpeg'
 )

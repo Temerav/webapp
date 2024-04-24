@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS email;
+
+CREATE TABLE email (
+    id SERIAL PRIMARY KEY NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    from_email VARCHAR(255) NOT NULL,
+    to_email VARCHAR(255) NOT NULL,
+    cc VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    text VARCHAR(8000) NOT NULL
+);
