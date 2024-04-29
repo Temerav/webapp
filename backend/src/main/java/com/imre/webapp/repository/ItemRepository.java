@@ -13,6 +13,5 @@ public interface ItemRepository extends
 
     Optional<Item> findItemByItemName(String itemName);
 
-    Item findItemById(Long id);
-
+    Optional<Item> findItemById(Long id);
 }

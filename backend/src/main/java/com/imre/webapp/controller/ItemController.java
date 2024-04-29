@@ -28,6 +28,13 @@ public class ItemController {
         return itemService.findAllItem();
     }
 
+    @GetMapping("/get/{id}")
+    public Item getItem(
+        @PathVariable final String id
+    ) {
+        return itemService.findItemById(Long.parseLong(id)).orElse(null);
+    }
+
     @GetMapping("/{imagePath}")
     public ResponseEntity<byte[]> getImage(
         @PathVariable String imagePath

@@ -8,6 +8,7 @@ import com.imre.webapp.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -15,6 +16,11 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    public Optional<Item> findItemById(
+        final Long id
+    ){
+        return itemRepository.findItemById(id);
+    }
 
 
     public void save(
@@ -40,7 +46,7 @@ public class ItemService {
         final Item updateItem
     ) throws Exception {
         try {
-            var dbItem = itemRepository.findItemById(id);
+            var dbItem = itemRepository.findItemById(id).orElse(null);
 
             if(dbItem != null) {
                 dbItem.setItemName(updateItem.getItemName());
@@ -60,12 +66,7 @@ public class ItemService {
         final Long id
     ) throws Exception {
         try {
-            var dbItem = itemRepository.findItemById(id);
-
-            if(dbItem != null) {
-                itemRepository.delete(dbItem);
-            }
-
+            itemRepository.findItemById(id).ifPresent(itemRepository::delete);
         } catch(Exception ex) {
             throw new Exception("Item with id: " + id + " not exist", ex);
         }
