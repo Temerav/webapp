@@ -5,10 +5,31 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Tooltip } from "@mui/material";
+import { AddCircle } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 
 const Work = () => {
   const [itemData, setItemData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+
+  const addItem = async () => {
+    try {
+      console.log("added item");
+    } catch (error) {}
+  };
+  const editItem = async (id) => {
+    try {
+      console.log(`edited item ${id}`);
+    } catch (error) {}
+  };
+  const deleteItem = async (id) => {
+    try {
+      console.log(`deleted item ${id}`);
+    } catch (error) {}
+  };
 
   React.useMemo(() => {
     axios
@@ -59,6 +80,38 @@ const Work = () => {
             <ImageListItemBar
               title={item.itemName}
               subtitle={item.itemDetails}
+              actionIcon={
+                <>
+                  {localStorage.getItem("session") !== null &&
+                    JSON.parse(localStorage.getItem("session"))?.role ===
+                      "ROLE_ADMIN" && (
+                      <>
+                        {" "}
+                        <Tooltip title="Add item">
+                          <IconButton onClick={addItem}>
+                            <AddCircle
+                              style={{ cursor: "pointer", color: "white" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit item">
+                          <IconButton onClick={() => editItem(item.id)}>
+                            <Edit
+                              style={{ cursor: "pointer", color: "white" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete item">
+                          <IconButton onClick={() => deleteItem(item.id)}>
+                            <Delete
+                              style={{ cursor: "pointer", color: "white" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </>
+                    )}
+                </>
+              }
             />
           </ImageListItem>
         ))}

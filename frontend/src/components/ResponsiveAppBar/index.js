@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { Children, useEffect, useMemo } from "react";
 import {
   AppBar,
   Toolbar,
@@ -10,27 +10,59 @@ import {
 import BrushIcon from "@mui/icons-material/Brush";
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "../ThemeSwitcher";
-
-let pages = ["Welcome", "Shop", "Work", "About", "Contact", "Login", "Signup"];
+import StyledBadge from "@mui/material/Badge";
 
 const ResponsiveAppBar = ({ colorMode, theme }) => {
+  const [pages, setPages] = React.useState([
+    "Welcome",
+    "Shop",
+    "Cart",
+    "Work",
+    "About",
+    "Contact",
+    "Login",
+    "Signup",
+  ]);
   const navigate = useNavigate();
+
+  const [cartItemsLength, setCartItemsLength] = React.useState(0);
 
   useMemo(() => {
     if (localStorage.getItem("session") !== null) {
-      pages = ["Welcome", "Shop", "Work", "About", "Contact", "Dashboard"];
-    } else {
-      pages = [
+      setPages([
         "Welcome",
         "Shop",
+        "Cart",
+        "Work",
+        "About",
+        "Contact",
+        "Dashboard",
+      ]);
+    } else {
+      setPages([
+        "Welcome",
+        "Shop",
+        "Cart",
         "Work",
         "About",
         "Contact",
         "Login",
         "Signup",
-      ];
+      ]);
     }
-  }, [localStorage.getItem("session")]);
+  }, [localStorage.getItem("session"), cartItemsLength]);
+
+  useEffect(() => {
+    const updateCartItemsLength = () => {
+      const cartItems = localStorage.getItem("cartItems");
+      const length =
+        cartItems !== null && cartItems !== ""
+          ? cartItems.split(",").length
+          : 0;
+      setCartItemsLength(length);
+    };
+    updateCartItemsLength();
+  }, [localStorage.getItem("cartItems")]);
 
   const handleClick = (page) => {
     navigate(`/${page}`);
@@ -68,19 +100,51 @@ const ResponsiveAppBar = ({ colorMode, theme }) => {
             Artemis
           </Typography>
           {pages.map((page) => (
-            <Tooltip title={page} key={page}>
-              <MenuItem key={page} onClick={handleClick.bind(this, page)}>
-                <Typography
-                  textAlign="center"
-                  style={{
-                    fontSize: "24px",
-                    lineHeight: "48px",
-                  }}
+            <div
+              key={page}
+              justifyContent="center"
+              marginLeft="auto"
+              marginRight="auto"
+            >
+              <Tooltip title={page} key={page}>
+                <MenuItem
+                  id={page}
+                  key={page}
+                  onClick={handleClick.bind(this, page)}
                 >
-                  {page === "Signup" ? "Sign Up" : page}
-                </Typography>
-              </MenuItem>
-            </Tooltip>
+                  {page === "Cart" ? (
+                    <StyledBadge
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      badgeContent={cartItemsLength}
+                      color="secondary"
+                    >
+                      <Typography
+                        textAlign="center"
+                        style={{
+                          fontSize: "24px",
+                          lineHeight: "28px",
+                        }}
+                      >
+                        {page === "Signup" ? "Sign Up" : page}
+                      </Typography>
+                    </StyledBadge>
+                  ) : (
+                    <Typography
+                      textAlign="center"
+                      style={{
+                        fontSize: "24px",
+                        lineHeight: "32px",
+                      }}
+                    >
+                      {page === "Signup" ? "Sign Up" : page}
+                    </Typography>
+                  )}
+                </MenuItem>
+              </Tooltip>
+            </div>
           ))}
           <ThemeSwitcher colorMode={colorMode} theme={theme} />
         </Toolbar>

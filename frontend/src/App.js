@@ -13,6 +13,7 @@ import SpeedDialCustom from "./components/SpeedDialCustom/index.js";
 import Login from "./components/Login/index.js";
 import Signup from "./components/Signup/index.js";
 import Dashboard from "./components/Dashboard/index.js";
+import Cart from "./components/Cart/index.js";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -47,6 +48,7 @@ function App() {
       }),
     [mode],
   );
+
   return (
     <div>
       <ColorModeContext.Provider value={colorMode}>
@@ -57,6 +59,7 @@ function App() {
             <Route path="/" element={<Welcome />} />
             <Route path="/Welcome" element={<Welcome />} />
             <Route path="/Shop" element={<Shop />} />
+            <Route path="/Cart" element={<Cart />} />
             <Route path="/Work" element={<Work />} />
             <Route path="/About" element={<About />} />
             <Route path="/Contact" element={<Contact />} />
