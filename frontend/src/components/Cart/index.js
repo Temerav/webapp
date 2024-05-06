@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import React, { useMemo } from "react";
+import { Box, IconButton } from "@mui/material";
+import React, { useMemo, useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -9,20 +9,34 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
+import { CartContext } from "../../components/Providers/CartProvider";
+import StyledBadge from "@mui/material/Badge";
+import Decrease from "@mui/icons-material/RemoveCircle";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [storedCartItems, setStoredCartItems] = React.useState(
-    localStorage.getItem("cartItems") !== null
-      ? localStorage.getItem("cartItems")
-      : "",
-  );
-  const [totalPrice, setTotalPrice] = React.useState(0);
+  const cartContext = React.useContext(CartContext);
+  const { cartItems, emptyCart, decreaseQuantity, removeFromCart } =
+    cartContext;
+  const [loading, setLoading] = useState(true);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [storedCartItems, setStoredCartItems] = useState([]);
 
-  const removeAllFromCart = async () => {
-    localStorage.removeItem("cartItems");
-    setStoredCartItems("");
+  const getQuantityForBadge = (id) => {
+    const cartItem = cartItems.find((item) => item.id === id);
+    return cartItem?.quantity;
+  };
+
+  const decreaseQuantityUpdate = (id) => {
+    decreaseQuantity(id);
+    const updatedCartItems = cartItems.filter((item) =>
+      item.quantity < 1 ? removeFromCart(id) : item,
+    );
+    setStoredCartItems(updatedCartItems);
+  };
+
+  const removeAllFromCart = () => {
+    emptyCart();
+    setStoredCartItems([]);
   };
 
   const order = async () => {
@@ -30,28 +44,29 @@ const Cart = () => {
   };
 
   const itemGet = async () => {
-    setCartItems([]);
-    storedCartItems.split(",").forEach((item) => {
-      if (item !== "" && item !== null) {
-        axios
-          .get(`http://localhost:8080/item/get/${item}`)
-          .then((response) => {
-            setCartItems((cartItems) => [...cartItems, response.data]);
-            setTotalPrice((totalPrice) => totalPrice + response.data.itemCost);
-          })
-          .catch((error) => {
-            console.error(error.toJSON());
-          });
-      }
-    });
+    const updatedCartItems = await Promise.all(
+      cartItems.map(async (item) => {
+        if (item) {
+          const response = await axios.get(
+            `http://localhost:8080/item/get/${item.id}`,
+          );
+          return { ...response.data, quantity: item.quantity };
+        }
+        return null;
+      }),
+    );
+
+    setStoredCartItems(updatedCartItems.filter(Boolean));
+    setLoading(false);
   };
 
-  useMemo(() => {
-    if (storedCartItems !== null || storedCartItems !== "") {
+  useEffect(() => {
+    if (cartItems.length > 0) {
       itemGet();
+    } else {
+      setLoading(false);
     }
-    setLoading(false);
-  }, [storedCartItems]);
+  }, [cartItems]);
 
   return (
     <Box
@@ -79,27 +94,37 @@ const Cart = () => {
         }}
       >
         {loading ? <CircularProgress /> : ""}
-        {cartItems.length === 0 ? (
+        {storedCartItems.length === 0 ? (
           <h1 style={{ textAlign: "center", marginTop: "7vh" }}>
             Your cart is empty
           </h1>
         ) : (
           ""
         )}
-        {cartItems.map((item) => (
+        {storedCartItems.map((item) => (
           <ListItem justifyContent="center">
             <ListItemAvatar>
-              <Avatar
-                src={
-                  item !== null
-                    ? `http://localhost:8080${item.picturePath}`
-                    : ""
-                }
-                alt={item.itemName}
-              />
+              <StyledBadge
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                badgeContent={getQuantityForBadge(item.id)}
+                color="secondary"
+              >
+                {" "}
+                <Avatar
+                  src={
+                    item?.picturePath
+                      ? `http://localhost:8080${item.picturePath}`
+                      : ""
+                  }
+                  alt={item?.itemName}
+                />
+              </StyledBadge>
             </ListItemAvatar>
             <ListItemText
-              primary={`${item.itemCost} HUF`}
+              primary={`${item?.itemCost * item?.quantity} HUF`}
               secondary={
                 <React.Fragment>
                   <Typography
@@ -108,23 +133,29 @@ const Cart = () => {
                     variant="body2"
                     color="text.primary"
                   ></Typography>
-                  {`${item.itemName} - ${item.itemDetails}`}
+                  {`${item?.itemName} - ${item?.itemDetails}`}
                 </React.Fragment>
               }
             />
+            <IconButton onClick={() => decreaseQuantityUpdate(item?.id)}>
+              <Decrease />
+            </IconButton>
           </ListItem>
         ))}
       </List>
       <div>
-        <Box
-          sx={{
-            "& .MuiButton-root": { m: "10%", width: "23%" },
-          }}
-        >
+        <Box sx={{ "& .MuiButton-root": { m: "10%", width: "23%" } }}>
           <br />
           {cartItems.length > 0 && (
             <>
-              <Typography variant="h5">Total: {totalPrice} HUF</Typography>
+              <Typography variant="h5">
+                Total:{" "}
+                {storedCartItems.reduce(
+                  (acc, item) => acc + item.itemCost * item.quantity,
+                  0,
+                )}{" "}
+                HUF
+              </Typography>
               <Button variant="contained" onClick={removeAllFromCart}>
                 Remove all
               </Button>

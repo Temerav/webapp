@@ -14,6 +14,7 @@ import Login from "./components/Login/index.js";
 import Signup from "./components/Signup/index.js";
 import Dashboard from "./components/Dashboard/index.js";
 import Cart from "./components/Cart/index.js";
+import CartProvider from "./components/Cart/index.js";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 

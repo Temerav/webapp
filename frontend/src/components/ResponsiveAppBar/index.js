@@ -11,6 +11,7 @@ import BrushIcon from "@mui/icons-material/Brush";
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "../ThemeSwitcher";
 import StyledBadge from "@mui/material/Badge";
+import { CartContext } from "../../components/Providers/CartProvider";
 
 const ResponsiveAppBar = ({ colorMode, theme }) => {
   const [pages, setPages] = React.useState([
@@ -25,6 +26,8 @@ const ResponsiveAppBar = ({ colorMode, theme }) => {
   ]);
   const navigate = useNavigate();
 
+  const cartContext = React.useContext(CartContext);
+  const { cartItems } = cartContext;
   const [cartItemsLength, setCartItemsLength] = React.useState(0);
 
   useMemo(() => {
@@ -54,15 +57,14 @@ const ResponsiveAppBar = ({ colorMode, theme }) => {
 
   useEffect(() => {
     const updateCartItemsLength = () => {
-      const cartItems = localStorage.getItem("cartItems");
-      const length =
-        cartItems !== null && cartItems !== ""
-          ? cartItems.split(",").length
-          : 0;
+      let length = 0;
+      cartItems.forEach((element) => {
+        length += element.quantity;
+      });
       setCartItemsLength(length);
     };
     updateCartItemsLength();
-  }, [localStorage.getItem("cartItems")]);
+  }, [cartItems]);
 
   const handleClick = (page) => {
     navigate(`/${page}`);

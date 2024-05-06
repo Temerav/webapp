@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { MDBContainer } from "mdb-react-ui-kit";
 import Textfield from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -54,70 +54,72 @@ const Login = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div
-        style={{
-          width: "30%",
-          marginTop: "7%",
-          marginBottom: "5%",
-          marginLeft: "7%",
-          marginRight: "7%",
-          textAlign: "center",
-          position: "relative",
-          boxShadow: "0 0 50px 0 rgba(0,0,0,0.2)",
-          color: "inherit",
-          borderRadius: "20px",
-        }}
-      >
-        <MDBContainer className="p-3">
-          <h2 className="mb-4 text-center">Use Your Credentials</h2>
-          <div>
-            <Textfield
-              required
-              wrapperClass="mb-4"
-              placeholder="Email address"
-              id="email"
-              value={email}
-              type="email"
-              style={{ height: "40px", width: "100%" }}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <br />
-          <div>
-            <Textfield
-              required
-              wrapperClass="mb-4"
-              placeholder="Password"
-              id="password"
-              type="password"
-              value={password}
-              style={{ height: "40px", width: "100%" }}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <br />
-          {error && <p className="text-danger">{error}</p>}{" "}
-          {loading && <CircularProgress color="secondary" />}
-          <br />
-          <div>
-            <Button
-              variant="contained"
-              style={{ height: "50px", width: "100%" }}
-              onClick={handleLogin}
-            >
-              Sign in
-            </Button>
-          </div>
-          <div className="text-center">
-            <p>
-              <br />
-              Not a member? <a href="/signup">Register</a>
-            </p>
-          </div>
-        </MDBContainer>
-      </div>
-    </div>
+    <Box
+      style={{
+        marginTop: "7vh",
+        marginBottom: "2vh",
+        marginLeft: "auto",
+        marginRight: "auto",
+        textAlign: "center",
+        "& .MuiTextField-root": { m: "2%", width: "23%" },
+        position: "relative",
+        boxShadow: "0 0 50px 0 rgba(0,0,0,0.2)",
+        color: "inherit",
+        borderRadius: "20px",
+        maxWidth: "1200px",
+        height: "90vh",
+        alignContent: "center",
+      }}
+    >
+      <MDBContainer className="p-3">
+        <h2 className="mb-4 text-center">Use Your Credentials</h2>
+        <div>
+          <Textfield
+            required
+            wrapperClass="mb-4"
+            placeholder="Email address"
+            id="email"
+            value={email}
+            type="email"
+            style={{ height: "40px", width: "50%" }}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <br />
+        <br />
+        <div>
+          <Textfield
+            required
+            wrapperClass="mb-4"
+            placeholder="Password"
+            id="password"
+            type="password"
+            value={password}
+            style={{ height: "40px", width: "50%" }}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <br />
+        {error && <p className="text-danger">{error}</p>}{" "}
+        {loading && <CircularProgress color="secondary" />}
+        <br />
+        <div>
+          <Button
+            variant="contained"
+            style={{ height: "50px", width: "50%" }}
+            onClick={handleLogin}
+          >
+            Sign in
+          </Button>
+        </div>
+        <div className="text-center">
+          <p>
+            <br />
+            Not a member? <a href="/signup">Register</a>
+          </p>
+        </div>
+      </MDBContainer>
+    </Box>
   );
 };
 

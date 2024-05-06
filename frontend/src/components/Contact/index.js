@@ -100,8 +100,6 @@ const Contact = () => {
             required
             id="firstName"
             label="First Name"
-            variant="filled"
-            style={{ border: "2px solid grey" }}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -109,8 +107,6 @@ const Contact = () => {
             required
             id="lastName"
             label="Last Name"
-            variant="filled"
-            style={{ border: "2px solid grey" }}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -120,10 +116,9 @@ const Contact = () => {
             required
             id="cc"
             label="Email"
-            variant="filled"
             value={cc}
             onChange={(e) => setCc(e.target.value)}
-            style={{ width: "50%", border: "2px solid grey" }}
+            style={{ width: "50%" }}
           />
         </div>
         <div>
@@ -131,9 +126,8 @@ const Contact = () => {
             required
             id="subject"
             label="Subject"
-            variant="filled"
             value={subject}
-            style={{ width: "50%", border: "2px solid grey" }}
+            style={{ width: "50%" }}
             onChange={(e) => setSubject(e.target.value)}
           />
         </div>
@@ -144,10 +138,9 @@ const Contact = () => {
             label="Message"
             multiline
             rows={4}
-            variant="filled"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            style={{ width: "50%", border: "2px solid grey" }}
+            style={{ width: "50%" }}
           />
         </div>
         {error && <p className="text-danger">{error}</p>}{" "}
