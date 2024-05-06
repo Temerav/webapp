@@ -12,26 +12,36 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
+@Table(name = "orders", schema = "public")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "work_item", schema = "public")
-public class WorkItem {
+@AllArgsConstructor
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotNull(message = "Item name mandatory")
-    private String itemName;
+    @NotNull
+    private String name;
 
-    @NotNull(message = "Item details mandatory")
-    private String itemDetails;
+    @NotNull
+    private String email;
 
-    @NotNull(message = "Item picture mandatory")
-    private String picturePath;
+    @NotNull
+    private String address;
+
+    @NotNull
+    private String phone;
+
+    @NotNull
+    private String comment;
+
+    @NotNull
+    private String cartItems;
 
 }

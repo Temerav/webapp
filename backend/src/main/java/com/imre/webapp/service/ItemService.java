@@ -1,5 +1,7 @@
 package com.imre.webapp.service;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.imre.webapp.model.Item;
@@ -7,6 +9,10 @@ import com.imre.webapp.repository.ItemRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +62,6 @@ public class ItemService {
 
                 itemRepository.save(dbItem);
             }
-
         } catch(Exception ex) {
             throw new Exception("Item with id: " + id + " not exist", ex);
         }
@@ -67,7 +72,7 @@ public class ItemService {
     ) throws Exception {
         try {
             itemRepository.findItemById(id).ifPresent(itemRepository::delete);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             throw new Exception("Item with id: " + id + " not exist", ex);
         }
     }
@@ -75,4 +80,14 @@ public class ItemService {
     public List<Item> findAllItem() {
         return itemRepository.findAll();
     }
+
+    public void saveItem (final Item newItem) {
+        final var item = new Item();
+        item.setItemName(newItem.getItemName());
+        item.setItemCost(newItem.getItemCost());
+        item.setItemDetails(newItem.getItemDetails());
+        item.setPicturePath(newItem.getPicturePath());
+        itemRepository.save(newItem);
+    }
+
 }
