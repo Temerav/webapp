@@ -39,7 +39,7 @@ const ResponsiveAppBar = ({ colorMode, theme }) => {
         "Work",
         "About",
         "Contact",
-        "Dashboard",
+        "Profile",
       ]);
     } else {
       setPages([

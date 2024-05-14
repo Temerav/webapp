@@ -15,7 +15,7 @@ const Login = () => {
 
   useMemo(() => {
     if (localStorage.getItem("session") !== null) {
-      history("/dashboard");
+      history("/profile");
       setTimeout(() => {
         history("/login");
       }, 3000);
@@ -42,7 +42,7 @@ const Login = () => {
       setLoading(false);
       console.log("Login successful:", response.data);
       localStorage.setItem("session", JSON.stringify(response.data));
-      history("/dashboard");
+      history("/profile");
     } catch (error) {
       setLoading(false);
       console.error(

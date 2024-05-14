@@ -20,7 +20,7 @@ const Signup = () => {
 
   useMemo(() => {
     if (localStorage.getItem("session") !== null) {
-      history("/dashboard");
+      history("/profile");
     }
   }, [history, localStorage.getItem("session")]);
 
@@ -51,7 +51,7 @@ const Signup = () => {
 
       localStorage.setItem("session", JSON.stringify(response.data));
       setLoading(false);
-      history("/dashboard");
+      history("/profile");
     } catch (error) {
       setLoading(false);
       console.error(

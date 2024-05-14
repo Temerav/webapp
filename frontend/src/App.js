@@ -12,7 +12,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SpeedDialCustom from "./components/SpeedDialCustom/index.js";
 import Login from "./components/Login/index.js";
 import Signup from "./components/Signup/index.js";
-import Dashboard from "./components/Dashboard/index.js";
+import Profile from "./components/Profile/index.js";
 import Cart from "./components/Cart/index.js";
 import CartProvider from "./components/Cart/index.js";
 
@@ -66,7 +66,7 @@ function App() {
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Signup" element={<Signup />} />
-            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/Profile" element={<Profile />} />
           </Routes>
           <SpeedDialCustom />
         </ThemeProvider>

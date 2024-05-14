@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useHistory hook
 import Box from "@mui/material/Box";
 
-const WelcomeDashboard = () => {
+const Profile = () => {
   const history = useNavigate();
   const [username, setUsername] = useState("");
 
@@ -37,7 +37,7 @@ const WelcomeDashboard = () => {
       >
         <br />
         <div>
-          <h2 className="mb-4 text-center">Welcome to Dashboard!</h2>
+          <h2 className="mb-4 text-center">Welcome to Profile!</h2>
         </div>
         <div>
           <p className="mb-4 text-center">Hello, {username}!</p>
@@ -62,4 +62,4 @@ const WelcomeDashboard = () => {
   );
 };
 
-export default WelcomeDashboard;
+export default Profile;

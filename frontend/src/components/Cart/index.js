@@ -12,6 +12,9 @@ import Button from "@mui/material/Button";
 import { CartContext } from "../../components/Providers/CartProvider";
 import StyledBadge from "@mui/material/Badge";
 import Decrease from "@mui/icons-material/RemoveCircle";
+import TextField from "@mui/material/TextField";
+import Modal from "@mui/material/Modal";
+import Alert from "@mui/material/Alert";
 
 const Cart = () => {
   const cartContext = React.useContext(CartContext);
@@ -20,6 +23,39 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
   const [storedCartItems, setStoredCartItems] = useState([]);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [comment, setComment] = useState("");
+  const [orderedItems, setOrderedItems] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setAddress("");
+    setEmail("");
+    setName("");
+    setPhone("");
+    setComment("");
+    setOrderedItems("");
+    setSuccess("");
+    setError("");
+    setOpen(false);
+  };
+
+  const validateForm = (z) => {
+    if (!/^[0-9]+$/.test(z)) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const getQuantityForBadge = (id) => {
     const cartItem = cartItems.find((item) => item.id === id);
@@ -40,7 +76,31 @@ const Cart = () => {
   };
 
   const order = async () => {
-    console.log(cartItems);
+    setOrderedItems(storedCartItems.map((item) => item.id).join(", "));
+    const orderEntity = {
+      name: name,
+      email: email,
+      address: address,
+      phone: phone,
+      comment: comment,
+      cartItems: orderedItems,
+    };
+
+    if (!validateForm(phone)) {
+      setError("Phone can contains numbers only");
+      return;
+    }
+
+    axios
+      .post("http://localhost:8080/order", orderEntity)
+      .then((response) => {
+        setSuccess("Order was successfull");
+        removeAllFromCart();
+      })
+      .catch((error) => {
+        console.error(error);
+        setError("Failed to send order");
+      });
   };
 
   const itemGet = async () => {
@@ -159,9 +219,154 @@ const Cart = () => {
               <Button variant="contained" onClick={removeAllFromCart}>
                 Remove all
               </Button>
-              <Button variant="contained" onClick={order}>
+              <Button variant="contained" onClick={() => handleOpen()}>
                 Order
               </Button>
+              <Modal
+                open={open}
+                onClose={() => handleClose()}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "1200px",
+                    height: "1000px",
+                    bgcolor: "background.paper",
+                    border: "2px solid #000",
+                    boxShadow: 24,
+                    p: 4,
+                    "& > :not(:last-child)": {
+                      mb: "4rem",
+                    },
+                  }}
+                >
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Finish your order
+                  </Typography>
+                  {error !== "" && (
+                    <Alert
+                      severity={error ? "error" : "info"}
+                      sx={{
+                        width: "60%",
+                        textAlign: "center",
+                        height: "40px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {error || " "}
+                    </Alert>
+                  )}
+                  {success !== "" && (
+                    <Alert
+                      severity={success ? "success" : ""}
+                      sx={{
+                        width: "60%",
+                        textAlign: "center",
+                        height: "40px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {success || " "}
+                    </Alert>
+                  )}
+                  <TextField
+                    id="name-input"
+                    label="Name"
+                    variant="outlined"
+                    style={{ width: "60%" }}
+                    required
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
+                  <TextField
+                    id="email-input"
+                    label="Email"
+                    variant="outlined"
+                    style={{ width: "60%" }}
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                  <TextField
+                    id="address-input"
+                    label="Address"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    style={{ width: "60%" }}
+                    required
+                    value={address}
+                    onChange={(event) => setAddress(event.target.value)}
+                  />
+
+                  <TextField
+                    id="phone-input"
+                    label="Phone"
+                    variant="outlined"
+                    style={{ width: "60%" }}
+                    required
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                  />
+
+                  <TextField
+                    id="comment-input"
+                    label="comment"
+                    variant="outlined"
+                    style={{ width: "60%" }}
+                    required
+                    multiline
+                    rows={4}
+                    value={comment}
+                    onChange={(event) => setComment(event.target.value)}
+                  />
+                  <div>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-around",
+                        "& .MuiButton-root": {
+                          m: "20%",
+                          minWidth: "120px",
+                        },
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        onClick={handleClose}
+                        style={{ minWidth: "200px" }}
+                      >
+                        Close
+                      </Button>
+                      <Button
+                        variant="contained"
+                        onClick={() => order()}
+                        style={{ minWidth: "200px" }}
+                      >
+                        Submit
+                      </Button>
+                    </Box>
+                  </div>
+                </Box>
+              </Modal>
             </>
           )}
         </Box>
