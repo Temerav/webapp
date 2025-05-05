@@ -9,7 +9,7 @@ INSERT INTO public.user
 )
 VALUES
 (
-    1,
+    0,
     'Admin',
     'asd@asd.com',
     '$2a$10$HklZAQuQWjf7Np.S2.SsSOyqQQhNo6ccJoFBTNn0BYog3Mw5UXxaK',
