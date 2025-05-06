@@ -6,8 +6,8 @@ Ezt a weboldalt festmények eladására készítettem.
 ## Futtatás
 
 A következők szükségesek:
-- Maven telepítése 3.9.0
-- Java telepítése (17)
+- Maven telepítése 3.9.9
+- Java telepítése (21)
 - Docker deskstop vagy wsl docker
 - Node version manager
 - Node 21
